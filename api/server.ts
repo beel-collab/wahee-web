@@ -1,4 +1,5 @@
 import express from 'express';
+import catalog from '../data/chapters.json';
 import {getTafsir,tafsirResources} from '../data/tafsir';
 import { fatiha } from '../data/fatiha';
 const app = express();
@@ -10,7 +11,7 @@ app.get('/v1/tafsirs/:id/verses/:key', (req,res)=>{
  res.set('Cache-Control','public, max-age=3600').json({data:passage});
 });
 app.get('/health', (_req,res) => res.json({status:'ok'}));
-app.get('/v1/chapters', (_req,res) => res.json({data:[{id:1,name:fatiha.name,verseCount:7}]}));
+app.get('/v1/chapters', (_req,res) => res.json({data:catalog.chapters.map(c=>({id:c.number,name:c.englishName,arabicName:c.name,meaning:c.englishNameTranslation,verseCount:c.numberOfAyahs,available:c.number===1}))}));
 app.get('/v1/chapters/:id', (req,res) => {
  if(req.params.id !== '1') { res.status(404).json({error:'Only Al-Fatihah is available in this prototype.'}); return; }
  res.set('Cache-Control','public, max-age=3600').json({data:fatiha});
