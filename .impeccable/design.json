@@ -188,16 +188,16 @@
       },
       "dark-accent": {
         "role": "primary",
-        "displayName": "Muted Teal",
+        "displayName": "Light Mint Green",
         "tonalRamp": [
-          "oklch(15.00% 0.07399 176.96)",
-          "oklch(26.43% 0.07399 176.96)",
-          "oklch(37.86% 0.07399 176.96)",
-          "oklch(49.29% 0.07399 176.96)",
-          "oklch(60.71% 0.07399 176.96)",
-          "oklch(72.14% 0.07399 176.96)",
-          "oklch(83.57% 0.07399 176.96)",
-          "oklch(95.00% 0.07399 176.96)"
+          "oklch(15.00% 0.07003 179.65)",
+          "oklch(26.43% 0.07003 179.65)",
+          "oklch(37.86% 0.07003 179.65)",
+          "oklch(49.29% 0.07003 179.65)",
+          "oklch(60.71% 0.07003 179.65)",
+          "oklch(72.14% 0.07003 179.65)",
+          "oklch(83.57% 0.07003 179.65)",
+          "oklch(95.00% 0.07003 179.65)"
         ]
       },
       "dark-soft": {
@@ -364,11 +364,11 @@
       },
       "brand": {
         "displayName": "Wahee wordmark",
-        "purpose": "Serif brand with an accent colored dot."
+        "purpose": "Arabic «وحي» in the same unmodified Noorehira font as the Quran. Regular 44px desktop / 38px mobile, 1.1 line height, normal tracking; footer 40px / 36px. Existing accent-colored Georgia period retained at visual left in either interface direction. Lettering and dot shift upward together by 0.35em for optical centering; the centered link retains a minimum 44px height for its tap area."
       },
       "quran": {
         "displayName": "Noorehira",
-        "purpose": "Bundled /fonts/Noorehira.ttf, original unmodified Noorehira 2.001. Native two-eyed initial/medial U+06C1 haa; no custom font build or letter substitution. Source U+066A renders as the intended ruku mark (ع) and is preserved. Source Unicode/database unchanged. Quran reading and context only; Hadith/general Arabic retain the unmodified Quran alias."
+        "purpose": "Bundled /fonts/Noorehira.ttf, original unmodified Noorehira 2.001. Native two-eyed initial/medial U+06C1 haa; no custom font build or letter substitution. Source U+066A renders as the intended ruku mark (ع) and is preserved. Source Unicode/database unchanged. Quran reading, context, and the Arabic wordmark; Hadith/general Arabic retain the unmodified Quran alias."
       },
       "urdu": {
         "displayName": "Noto Nastaliq Urdu",
@@ -566,7 +566,7 @@
     "keyCharacteristics": [
       "A single generous reading column with fine dividers.",
       "Muted teal actions and restrained tonal surfaces.",
-      "Georgia headings and brand paired with Arial controls.",
+      "Georgia headings, a Noorehira Arabic wordmark, and Arial controls.",
       "Bundled Quran and Urdu faces with room for their marks and descenders.",
       "Compact wayfinding that becomes a drawer on mobile."
     ],

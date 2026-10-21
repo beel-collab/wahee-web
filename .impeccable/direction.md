@@ -19,3 +19,11 @@ Word-by-word replaces the selected ayah text with a right-to-left sequence of Ar
 ## Quran haa correction
 
 User identified 1:5 and explicitly requested the two-eyed ھ form. They then requested an existing font instead of a customized font. Quran reading now uses the original, unmodified Noorehira 2.001, which natively supplies the requested initial/medial haa and covers all displayed Quran characters. The custom Wahee Quran font and build script are removed. Source Unicode text and the baseline database remain unchanged. Noorehira draws the source's U+066A code as the intended ruku mark (ع), so the earlier percent-stripping workaround is removed and the marker is preserved. Hadith and Urdu translation typography retain their existing faces. Keep the established reading sizes, spacing, original brand green #367b6c and near-black dark canvas #09090b.
+
+## Arabic wordmark and dark accent
+
+The user requested the logo in the same font as the Quran, the name in Arabic, and the existing dot retained. Shared header and footer branding now reads «وحي» in unmodified Noorehira, with the dot kept at the visual left in either interface locale. The user also replaced the earlier original-green-in-dark requirement with a light green for visibility. Dark accent is now #8bcdbf on the existing #09090b canvas; light mode retains #367b6c. Keep the existing reading typography, spacing and behavior.
+
+## Wordmark alignment
+
+The user identified the Arabic logo sitting too low. Keep its home-link tap area centered with a 44px minimum height; shift the visible lettering and left-side dot together by -0.35em to compensate Noorehira's tall recitation metrics. The correction scales with the existing responsive font sizes and applies to shared headers and footers.

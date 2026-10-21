@@ -6,6 +6,36 @@
  font-display: swap;
 }
 
+.brand {
+ align-items: center;
+ min-height: 44px;
+ font: 400 44px/1.1 'Noorehira', Quran, serif;
+ letter-spacing: normal;
+}
+
+.brand-mark {
+ display: inline-flex;
+ align-items: baseline;
+ gap: 3px;
+ /* Offset Noorehira's tall recitation metrics, preserving the centered tap area. */
+ transform: translateY(-.35em);
+}
+
+.brand-dot {
+ font: 700 .8em/1 Georgia, serif;
+}
+
+.home-footer .brand,
+.library-footer .brand {
+ font-size: 40px;
+}
+
+@media (max-width: 760px) {
+ .brand { font-size: 38px; }
+ .home-footer .brand,
+ .library-footer .brand { font-size: 36px; }
+}
+
 /* The unmodified source font supplies the two-eyed haa and renders the
    database's legacy U+066A section code as its intended ruku mark. */
 .arabic,

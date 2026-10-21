@@ -15,7 +15,7 @@ colors:
   dark-ink: "#f0f0f2"
   dark-muted: "#a5a5ad"
   dark-line: "#2b2b31"
-  dark-accent: "#367b6c"
+  dark-accent: "#8bcdbf"
   dark-soft: "#191b1c"
   dark-hero: "#131315"
   sepia-bg: "#faf5e9"
@@ -53,11 +53,11 @@ typography:
     fontSize: "13px"
     fontWeight: 500
   brand:
-    fontFamily: "Georgia, serif"
-    fontSize: "34px"
-    fontWeight: 700
-    lineHeight: 0.9
-    letterSpacing: "-1.2px"
+    fontFamily: "'Noorehira', Quran, serif"
+    fontSize: "44px"
+    fontWeight: 400
+    lineHeight: 1.1
+    letterSpacing: "normal"
   quran:
     fontFamily: "'Noorehira', Quran, serif"
     fontSize: "34px"
@@ -200,7 +200,7 @@ The system supports Arabic and Urdu as primary reading materials. Their bundled 
 **Key Characteristics:**
 - A single generous reading column with fine dividers.
 - Muted teal actions and restrained tonal surfaces.
-- Georgia headings and brand paired with Arial controls.
+- Georgia headings, a Noorehira Arabic wordmark, and Arial controls.
 - Bundled Quran and Urdu faces with room for their marks and descenders.
 - Compact wayfinding that becomes a drawer on mobile.
 
@@ -211,7 +211,7 @@ The palette uses one primary accent, green tinted light neutrals, and correspond
 ### Primary
 
 - **Muted Teal** (`accent`): active navigation, links, bookmark state, calligraphy, focus outlines, and filled actions.
-- **Muted Teal** (`dark-accent`): the original brand green, preserved in dark mode.
+- **Light Mint Green** (`dark-accent`): a lighter shade of the brand green for visible links, active states, focus rings, and the logo dot on dark surfaces.
 - **Warm Olive** (`sepia-accent`): the same action roles on sepia paper.
 
 ### Neutral
@@ -234,6 +234,8 @@ Each neutral has a `dark-` and `sepia-` counterpart. Those counterparts replace 
 
 Noorehira Regular (2.001) is distributed unmodified with `Noorehira-LICENSE.txt`, whose terms permit free distribution with applications. It natively supplies the requested two-eyed initial and medial U+06C1 haa, with no custom font build or letter substitution. It serves Quran ayahs, Bismillah, directory/chapter calligraphy and names, ayah markers and context, and Quran word/root/lemma text. The font draws the source's U+066A code as its intended ruku mark (ع), so this marker is preserved. Quran source Unicode, recitation marks, and the baseline database remain unchanged. Hadith, general Arabic, Urdu, reading sizes, and CSS line heights retain their existing behavior.
 
+The shared header and footer wordmark reads «وحي» in Noorehira, with the existing accent-colored dot at its visual left. The wordmark keeps its own direction in both interface locales. It uses regular 44px type on desktop and 38px on mobile; footer variants use 40px and 36px. The dot retains its bold Georgia period at 0.8em. Lettering and dot shift upward together by 0.35em to optically center Noorehira's tall metrics; the centered link retains a minimum height of 44px for its tap area.
+
 The serif face gives page titles a reflective, editorial character. Smaller sans serif controls remain practical and legible. Quran and Urdu text use their own metrics rather than inheriting control line heights.
 
 ### Hierarchy
@@ -255,7 +257,7 @@ Library interface headings in Urdu use the bundled Urdu face with (2.3) line hei
 
 ## Layout
 
-The top header is a horizontal band (76px desktop, 66px mobile) with a serif wordmark, main links, language switch, and theme action. A sticky chapter bar sits at the top of the reader viewport (minimum 61px desktop, 58px mobile).
+The top header is a horizontal band (76px desktop, 66px mobile) with an Arabic wordmark, main links, language switch, and theme action. A sticky chapter bar sits at the top of the reader viewport (minimum 61px desktop, 58px mobile).
 
 The root route (`/`) is a four-section front door. Quran and Hadith are the two generous reading entrances, side by side with a (24px) gap on desktop and stacked at (760px). Seerah and Duas follow as quieter ruled rows explicitly marked upcoming. The front door and Hadith library share a maximum width of (1180px), with (44px) desktop and (23px) mobile side padding.
 
