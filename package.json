@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "concurrently -k \"tsx api/server.ts\" \"next start --port 3001\"",
     "typecheck": "tsc --noEmit",
-    "test": "playwright test"
+    "test": "playwright test",
+    "verify:data": "node --import tsx scripts/verify-quran.ts",
+    "verify:font": "node --import tsx scripts/verify-quran-font.ts",
+    "verify:hadith": "node --import tsx scripts/verify-hadith.ts"
   },
   "dependencies": {
     "express": "^5.2.1",
@@ -27,5 +30,8 @@
     "concurrently": "^10.0.5",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=22.13.0"
   }
 }

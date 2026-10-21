@@ -1,3 +1,5 @@
-import Home from './home';
-export const metadata={title:'Wahee · The Noble Quran',description:'Explore all 114 surahs of the Noble Quran. A quiet space to read, listen and understand in English and Urdu.'};
-export default function Page(){return <Home/>}
+import Welcome from './welcome';
+import {getHadithCollections} from '../data/hadith-db';
+export const dynamic='force-dynamic';
+export const metadata={title:'Wahee · Read. Learn. Reflect.',description:'A quiet place for the Quran and Hadith, with Seerah and Duas to come.'};
+export default function Page(){const collections=getHadithCollections();return <Welcome collections={collections.length} hadiths={collections.reduce((n,c)=>n+c.count,0)}/>}

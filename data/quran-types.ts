@@ -1,0 +1,11 @@
+export type Edition = {id:string;name:string;language:string;direction:'rtl'|'ltr'};
+export type ChapterSummary = {id:number;name:string;arabicName:string;meaning:string;verseCount:number;revelation:string;juz:number;page:number};
+export type Verse = {id:number;number:number;key:string;chapterId:number;arabic:string;translation:string;juz:number;page:number};
+export type Chapter = ChapterSummary & {bismillah:string|null;openingNotes:boolean;edition:Edition;verses:Verse[]};
+export type NavigationEntry = {number:number;chapterId:number;verse:number;name:string};
+export type QuranNavigation = {juz:NavigationEntry[];pages:NavigationEntry[]};
+export type Topic = {id:number;chapterId:number;start:number;end:number;english:string;urdu:string};
+export type SearchResult = Verse & {chapterName:string};
+export type Word = {id:number;position:number;arabic:string;root:string;lemma:string;english:string;urdu:string;grammar:string[]};
+export type TafsirResource = {id:string;name:string;author:string;language:string;direction:'rtl'|'ltr'};
+export type TafsirPassage = {resource:TafsirResource;verseKey:string;text:string|null};

@@ -1,24 +1,20 @@
 import express from 'express';
-import catalog from '../data/chapters.json';
-import {getTafsir,tafsirResources} from '../data/tafsir';
-import { fatiha } from '../data/fatiha';
-const app = express();
-app.disable('x-powered-by');
-app.get('/v1/tafsirs', (_req,res)=>res.json({data:tafsirResources}));
-app.get('/v1/tafsirs/:id/verses/:key', (req,res)=>{
- const passage=getTafsir(Number(req.params.id),req.params.key);
- if(!passage){res.status(404).json({error:'Tafsir is not available for this source and verse.'});return;}
- res.set('Cache-Control','public, max-age=3600').json({data:passage});
-});
-app.get('/health', (_req,res) => res.json({status:'ok'}));
-app.get('/v1/chapters', (_req,res) => res.json({data:catalog.chapters.map(c=>({id:c.number,name:c.englishName,arabicName:c.name,meaning:c.englishNameTranslation,verseCount:c.numberOfAyahs,available:c.number===1}))}));
-app.get('/v1/chapters/:id', (req,res) => {
- if(req.params.id !== '1') { res.status(404).json({error:'Only Al-Fatihah is available in this prototype.'}); return; }
- res.set('Cache-Control','public, max-age=3600').json({data:fatiha});
-});
-app.get('/v1/verses/:key', (req,res) => {
- const verse=fatiha.verses.find(v=>v.key===req.params.key);
- if(!verse) {res.status(404).json({error:'Verse not available'}); return;}
- res.json({data:verse});
-});
-app.listen(Number(process.env.API_PORT || 4401), '0.0.0.0', () => console.log('Wahee API: http://localhost:4401'));
+import {editions,getChapters,getChapter,getVerse,getNavigation,getTafsir,getOpeningTafsir,getWords,getTopics,normalize,searchVerses,tafsirResources} from '../data/quran-db';
+import {getHadith} from '../data/hadith-db';
+const app=express();app.disable('x-powered-by');
+app.get('/v1/hadith/records',(req,res)=>{const keys=String(req.query.keys||'').split(',').slice(0,100);const data=keys.map(key=>{const [slug,id]=key.split(':');const h=getHadith(slug,Number(id));return h?{collection:h.collection,id:h.id,number:h.number,bookId:h.bookId,arabic:h.arabic.slice(0,240),english:h.english?.text.slice(0,240)||'',urdu:h.urdu?.text.slice(0,240)||''}:null}).filter(Boolean);res.json({data})});
+app.get('/health',(_req,res)=>res.json({status:'ok',source:'quranDb.db',chapters:getChapters().length}));
+app.get('/v1/editions',(_req,res)=>res.json({data:editions}));
+app.get('/v1/chapters',(_req,res)=>res.json({data:getChapters()}));
+app.get('/v1/navigation',(_req,res)=>res.json({data:getNavigation()}));
+app.get('/v1/chapters/:id',(req,res)=>{const data=getChapter(Number(req.params.id),String(req.query.edition||'english'));if(!data){res.status(404).json({error:'Surah not found.'});return}res.json({data})});
+app.get('/v1/verses/:key',(req,res)=>{const data=getVerse(req.params.key,String(req.query.edition||'english'));if(!data){res.status(404).json({error:'Ayah not found.'});return}res.json({data})});
+app.get('/v1/verses',(req,res)=>{const keys=String(req.query.keys||'').split(',').slice(0,100);res.json({data:keys.map(k=>getVerse(k,String(req.query.edition||'english'))).filter(Boolean)})});
+app.get('/v1/tafsirs',(_req,res)=>res.json({data:tafsirResources}));
+app.get('/v1/tafsirs/:id/verses/:key',(req,res)=>{const data=getTafsir(req.params.id,req.params.key);if(!data){res.status(404).json({error:'Tafsir source or ayah not found.'});return}res.json({data})});
+app.get('/v1/tafsirs/:id/chapters/:chapterId',(req,res)=>{const data=getOpeningTafsir(req.params.id,Number(req.params.chapterId));if(!data){res.status(404).json({error:'Opening commentary not found.'});return}res.json({data})});
+app.get('/v1/words/:key',(req,res)=>{const data=getWords(req.params.key);if(!data){res.status(404).json({error:'Ayah not found.'});return}res.json({data})});
+app.get('/v1/topics',(req,res)=>{const q=normalize(String(req.query.q||'')).slice(0,200);const chapter=Number(req.query.chapter);const page=Math.max(1,Math.floor(Number(req.query.page)||1));const topics=getTopics().filter(t=>(!chapter||t.chapterId===chapter)&&(!q||normalize(`${t.english} ${t.urdu}`).includes(q)));res.json({data:topics.slice((page-1)*30,page*30),total:topics.length,page})});
+app.get('/v1/search',(req,res)=>res.json({data:searchVerses(String(req.query.q||''),String(req.query.edition||'english'),Math.max(1,Math.floor(Number(req.query.page)||1)))}));
+app.use((error:Error,_req:express.Request,res:express.Response,_next:express.NextFunction)=>{console.error(error);res.status(500).json({error:'Content could not load. Please try again.'})});
+app.listen(Number(process.env.API_PORT||4401),'127.0.0.1',()=>console.log('Wahee Quran API ready'));

@@ -5,3 +5,9 @@ test-results/
 playwright-report/
 .env*
 !.env.example
+.DS_Store
+__pycache__/
+quranDb.original-encoded.db
+quranDb.recovered.db
+quranDb.recovered.recovery.json
+.impeccable/review/

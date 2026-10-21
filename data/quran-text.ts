@@ -1,0 +1,1 @@
+export function normalize(value:string){return value.toLowerCase().normalize('NFKD').replace(/[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed\u200c-\u200f\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/[ىی]/g,'ي').replace(/ک/g,'ك').replace(/[ۀہ]/g,'ه').replace(/ۃ/g,'ة').replace(/[٠-٩۰-۹]/g,d=>String(d.charCodeAt(0)-(d<='٩'?0x660:0x6f0))).replace(/\s+/g,' ').trim()}
