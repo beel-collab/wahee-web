@@ -16,7 +16,8 @@ type Row=Record<string,string|number|null>;
 const all=(sql:string,...params:(string|number)[])=>db().prepare(sql).all(...params) as Row[];
 const one=(sql:string,...params:(string|number)[])=>db().prepare(sql).get(...params) as Row|undefined;
 export function plain(value:unknown){return sanitizeHtml(String(value??''),{allowedTags:[],allowedAttributes:{}}).replace(/\s+/g,' ').trim()}
-// Strip only source display ornaments. Original Arabic stays untouched in SQLite.
+// Strip duplicated source numbering and private-use page annotations. Keep
+// U+066A: Noorehira renders this legacy source code as the intended ruku mark.
 export function arabicText(value:unknown){return String(value??'').replace(/﴿[^﴾]*﴾/g,'').replace(/[\uE000-\uF8FF].*$/u,'').replace(/\s+/g,' ').trim()}
 export {normalize} from './quran-text';
 import {normalize} from './quran-text';

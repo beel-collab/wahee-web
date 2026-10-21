@@ -1,19 +1,21 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
 import {arabicText} from '../data/quran-db';
 import {cleanHadithText} from '../data/hadith-db';
 import {hadithArabicParts,hasLegacyHadithArabic} from '../data/hadith-text';
 
 // Check actual cmap glyph IDs, rather than relying on browser font fallback.
-const font=readFileSync('public/fonts/ScheherazadeNew-Regular.ttf');
+function glyphChecker(file:string){
+const font=readFileSync(file);
 let cmap=0;
 for(let i=0;i<font.readUInt16BE(4);i++){
  const entry=12+16*i;
  if(font.toString('ascii',entry,entry+4)==='cmap')cmap=font.readUInt32BE(entry+8);
 }
 assert.ok(cmap,'Font must contain a Unicode character map');
-function hasGlyph(code:number){
+return function hasGlyph(code:number){
  for(let i=0;i<font.readUInt16BE(cmap+2);i++){
   const table=cmap+font.readUInt32BE(cmap+8+8*i),format=font.readUInt16BE(table);
   if(format===4&&code<=0xffff){
@@ -35,6 +37,10 @@ function hasGlyph(code:number){
  }
  return false;
 }
+}
+const quranFont='public/fonts/Noorehira.ttf';
+assert.equal(createHash('sha256').update(readFileSync(quranFont)).digest('hex'),'012d33c47306e63850d4db08a5f94191cba679aa90510aeaedffe8209eaa3f31','The original Noorehira font must remain unmodified');
+const hasGlyph=glyphChecker(quranFont);
 const db=new DatabaseSync('dbs/quranDb.db',{readOnly:true});
 const characters=new Set<string>();
 for(const row of db.prepare('SELECT arabic FROM tbl_QuranComplete').iterate())for(const char of arabicText(row.arabic))if(!/\s/u.test(char))characters.add(char);
@@ -42,9 +48,11 @@ const missing=[...characters].filter(char=>!hasGlyph(char.codePointAt(0)!));
 assert.deepEqual(missing,[],'Every Quran character must exist in the bundled font');
 assert.ok(hasGlyph(0x06c1),'Haa (ہ) must not use a fallback font');
 assert.ok(hasGlyph(0x06c3),'Teh marbuta (ۃ) must not use a fallback font');
+assert.ok(hasGlyph(0x066a),'The source ruku code must render using Noorehira');
 db.close();
 console.log(`Font verified: all ${characters.size} displayed Quran characters, including ہ and ۃ, have actual glyphs.`);
 const hadithCharacters=new Set<string>();
+const hadithHasGlyph=glyphChecker('public/fonts/ScheherazadeNew-Regular.ttf');
 let legacyRecords=0;
 for(const name of ['bukhari','muslim','tirmazi','abu_dawood','nasai','maja','musnad','mishkat','silsila']){
  const source=new DatabaseSync(`dbs/${name}.db`,{readOnly:true});
@@ -54,6 +62,6 @@ for(const name of ['bukhari','muslim','tirmazi','abu_dawood','nasai','maja','mus
  }
  source.close();
 }
-assert.deepEqual([...hadithCharacters].filter(char=>!hasGlyph(char.codePointAt(0)!)),[],'Every displayed Hadith source character must exist in the bundled font');
+assert.deepEqual([...hadithCharacters].filter(char=>!hadithHasGlyph(char.codePointAt(0)!)),[],'Every displayed Hadith source character must exist in the bundled font');
 console.log(`Font verified: all ${hadithCharacters.size} visible characters in the nine Hadith Arabic sources have actual glyphs.`);
 console.log(`${legacyRecords} source records contain legacy font fragments, explicitly marked by the reader rather than rendered as unrelated letters.`);

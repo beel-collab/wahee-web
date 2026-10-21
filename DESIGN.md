@@ -59,7 +59,7 @@ typography:
     lineHeight: 0.9
     letterSpacing: "-1.2px"
   quran:
-    fontFamily: "Quran, serif"
+    fontFamily: "'Noorehira', Quran, serif"
     fontSize: "34px"
     fontWeight: 400
     lineHeight: 2.4
@@ -72,7 +72,7 @@ typography:
     fontSize: "20px"
     lineHeight: 2.5
   word-arabic:
-    fontFamily: "Quran, serif"
+    fontFamily: "'Noorehira', Quran, serif"
     fontSize: "32px"
     lineHeight: 1.95
   word-meaning:
@@ -230,7 +230,9 @@ Each neutral has a `dark-` and `sepia-` counterpart. Those counterparts replace 
 
 ## Typography
 
-**Display and heading font:** Georgia with a serif fallback. **Control and Latin body font:** Arial, Helvetica, sans-serif. **Quran font:** bundled Scheherazade New, exposed as `Quran`. **Urdu font:** bundled Noto Nastaliq Urdu, exposed as `Urdu`.
+**Display and heading font:** Georgia with a serif fallback. **Control and Latin body font:** Arial, Helvetica, sans-serif. **Quran font:** bundled `Noorehira`, with `Quran, serif` fallbacks. **Hadith and general Arabic font:** unmodified Scheherazade New, exposed as `Quran`. **Urdu font:** bundled Noto Nastaliq Urdu, exposed as `Urdu`.
+
+Noorehira Regular (2.001) is distributed unmodified with `Noorehira-LICENSE.txt`, whose terms permit free distribution with applications. It natively supplies the requested two-eyed initial and medial U+06C1 haa, with no custom font build or letter substitution. It serves Quran ayahs, Bismillah, directory/chapter calligraphy and names, ayah markers and context, and Quran word/root/lemma text. The font draws the source's U+066A code as its intended ruku mark (ع), so this marker is preserved. Quran source Unicode, recitation marks, and the baseline database remain unchanged. Hadith, general Arabic, Urdu, reading sizes, and CSS line heights retain their existing behavior.
 
 The serif face gives page titles a reflective, editorial character. Smaller sans serif controls remain practical and legible. Quran and Urdu text use their own metrics rather than inheriting control line heights.
 

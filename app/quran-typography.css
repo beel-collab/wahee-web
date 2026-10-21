@@ -1,0 +1,23 @@
+@font-face {
+ font-family: 'Noorehira';
+ src: url('/fonts/Noorehira.ttf') format('truetype');
+ font-weight: 400;
+ font-style: normal;
+ font-display: swap;
+}
+
+/* The unmodified source font supplies the two-eyed haa and renders the
+   database's legacy U+066A section code as its intended ruku mark. */
+.arabic,
+.bismillah,
+.home-calligraphy,
+.surah-card-arabic,
+.hero-calligraphy,
+.ayah-marker,
+.context-preview,
+.word-unit-arabic,
+.selected-word,
+.word-detail-content dd,
+.word-sheet-content h3 {
+ font-family: 'Noorehira', Quran, serif;
+}
